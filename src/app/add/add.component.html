@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <h3 mat-dialog-title>Add new Issue</h3>
   
     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
@@ -14,15 +14,15 @@
         </mat-form-field>
       </div>
   
-       <!--Contains mat-hint for characters count and has maxLengt set-->
+       Contains mat-hint for characters count and has maxLengt set
        <div class="form">
         <mat-form-field color="accent">
           <input matInput #inputstate class="form-control" placeholder="productName" [(ngModel)]="data.productName" name="productName"  required >
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          <!-- <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint> -->
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
       </div>
-      <!--Textarea for demo purposes-->
+      Textarea for demo purposes
       <div class="form">
         <mat-form-field color="accent">
           <textarea matInput #input class="form-control" placeholder="description" [(ngModel)]="data.description" name="description" required ></textarea>
@@ -43,7 +43,7 @@
         <mat-form-field color="accent">
           <input matInput #inputstate class="form-control" placeholder="clothSize" [(ngModel)]="data.clothSize" name="clothSize"  required >
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          <!-- <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint> -->
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
       </div>
   
@@ -55,4 +55,64 @@
       </div>
     </form>
   </div>
+
+
+
+
+
+   -->
+   <!-- ------------------------- -->
+
+
+   <h1 mat-dialog-title>add product form</h1>
+   <hr>
+<div mat-dialog-contect>
+   <form [formGroup]="productForm">
+     <!-- --------- -->
+     <label for=""><h2>category</h2></label>
+     <mat-radio-group   formControlName="category"class="example-radio-group">
+         <mat-radio-button class="example-radio-group" *ngFor="let category of categoryList" [value]="category">
+             {{category}}
+         </mat-radio-button>
+     </mat-radio-group>
+     <br>
+     <br>
+     <!-- ----------- -->
+     <mat-form-field appearance="outline">
+      <mat-label>product name</mat-label>
+      <input formControlName="productName" matInput placeholder="name">
+  </mat-form-field>
+  <br>
+           <!-- ------------ -->
+    <mat-form-field appearance="outline">
+      <mat-label>description</mat-label>
+      <textarea  formControlName="description" matInput ></textarea>
+  </mat-form-field>
+  <br>
+     <!-- --------- -->
+     <mat-form-field appearance="outline">
+      <mat-label>price</mat-label>
+      <input  formControlName="price" matInput type="number" placeholder="name">
+  </mat-form-field>
+  <br>
+  <!-- ----------------- -->
+  <mat-form-field appearance="outline">
+    <mat-label>product category</mat-label>
+    <mat-select formControlName="category" matInput placeholder="category">
+        <mat-option value="XL">XL</mat-option>
+        <mat-option value="L">L</mat-option>
+        
+        </mat-select>
+</mat-form-field>
+<br>
+    
+    <br>
+    </form>
+    </div>
+    <!-- -------------- -->
+    <div mat-dialog-action [align]="'end'">
+      <button mat-raised-button class="primary" mat-dialog-close>close</button>
+      <button style="margin-left:10px;" mat-raised-button color="primary" (click)="addProduct()">{{actionBtn}}}</button>
   
+  </div>
+

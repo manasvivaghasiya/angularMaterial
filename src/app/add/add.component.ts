@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -8,22 +9,29 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
+  categoryList=["Boys","girls"]
   formControl: any;
+  productForm!:FormGroup;
+  actionBtn : string ="save"
+  updateProduct: any;
 
-  constructor() { }
+  constructor(private formBuilder:FormBuilder, 
+  private dialogRef:MatDialogRef<AddComponent>) { }
 
   ngOnInit(): void {
+    this.productForm = this.formBuilder.group({
+      category:['',Validators.required],
+      productName:['',Validators.required],
+      description:['',Validators.required],
+      price:['',Validators.required],
+      clothSize:['',Validators.required],
+      inStock:['',Validators.required],
+      
+    });
   }
 
-  confirmAdd(){
 
-  }
-  onNoClick(){
-
-  }
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field' :
-      this.formControl.hasError('email') ? 'Not a valid email' :
-        '';
-  }
+ addProduct(){
+         
+ }
 }

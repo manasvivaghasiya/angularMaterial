@@ -15,6 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import {MatRadioModule} from '@angular/material/radio';
 import { AddComponent } from './add/add.component';
+import {MatSelectModule} from '@angular/material/select';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -39,7 +42,11 @@ import { AddComponent } from './add/add.component';
     ReactiveFormsModule,
     MatInputModule,
     MatSortModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule,
+    HttpClientModule,
+    MatDialogModule,
+    
 
   ],
   providers: [],

@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiProduct:'https://student-api.mycodelibraries.com/api'
 
 };
 
