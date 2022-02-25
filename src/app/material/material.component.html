@@ -53,9 +53,12 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
       <td mat-cell *matCellDef="let row">
-           <button mat-icon-button color="primary" (click)="openDialog()">
+           <!-- <button mat-icon-button color="primary" (click)="openDialog()">
              <mat-icon>edit</mat-icon>
-           </button>
+           </button> -->
+           <button mat-icon-button color="primary" (click)="openDialog()">
+            <mat-icon>edit</mat-icon>
+          </button>
            <button (click)="deleteProduct(row._id)" mat-icon-button  color="primary">
              <mat-icon>delete</mat-icon>
                

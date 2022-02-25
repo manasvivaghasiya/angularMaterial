@@ -1,11 +1,13 @@
 // import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AddComponent } from '../add/add.component';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { Data } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 
 
 
@@ -29,16 +31,16 @@ export class MaterialComponent implements OnInit {
   dataSource!: MatTableDataSource<row>;
 
 
-  constructor(public Add: MatDialog ,
-       private http:HttpClient
+  constructor(public dialog: MatDialog ,
+       private http:HttpClient,
+       private ChangeDetector:ChangeDetectorRef
     ) { }
+
+    // @ViewChild(MatSort, {static: true}) sort: MatSort | undefined;
 
   ngOnInit(): void {
   
    this.getProduct();
-    
-
-   
   }
 
   getProduct(){
@@ -46,19 +48,22 @@ export class MaterialComponent implements OnInit {
       this.dataSource =  new MatTableDataSource < row > (res.data);
       console.log(res);
       console.log(this.dataSource)
+      this.ChangeDetector.detectChanges();
     });
   }
 
+
+
   openDialog(){
-    this.Add.open(AddComponent,{
+    const dialogRef=this.dialog.open(AddComponent,{
       width:'22%'
 });
-  
+
 }
+
 addProduct(){
 
 }
-
 
  deleteProduct(id:string){
    debugger
@@ -76,12 +81,12 @@ addProduct(){
  
 
   }
-
-  export interface row {
-   category:string;
-   productName:string;
-   description:string;
-   price:number;
-   clothSize:string;
-   inStock:string;
-  }
+export interface row {
+    category:string;
+    productName:string;
+    description:string;
+    price:number;
+    clothSize:string;
+    inStock:string;
+   }
+ 
