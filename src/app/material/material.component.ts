@@ -1,7 +1,7 @@
 // import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { AddComponent } from '../add/add.component';
+import { AddComponent, row } from '../add/add.component';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,9 +26,11 @@ export class MaterialComponent implements OnInit {
   // public productDialog!:boolean
   element: any;
   add: any;
-  row:any;
+  id:any;
+  // row:any;
   productForm: any;
   dataSource!: MatTableDataSource<any>;
+  // @ViewChild(MatSort) sort!:MatSort;
 
 
   constructor(public dialog: MatDialog ,
@@ -65,25 +67,37 @@ export class MaterialComponent implements OnInit {
   openDialog(){
     const dialogRef=this.dialog.open(AddComponent,{
       width:'30%'
-});
+}).afterClosed().subscribe(val=>{
+  if(val == 'save'){
+    this.getProduct();
+  }
+})
 
 }
 
 editProduct(row:any){
+  debugger
   const dialogRef=this.dialog.open(AddComponent,{
     width:'30%',
-    data:row
+      data:row
+    // this.row.data;
+
 }).afterClosed().subscribe(val=>{
   if(val==='update'){
     this.getProduct();
   }
 })
+
+}
+getByProductId(id:string){
+  this.http.get(`${environment.apiProduct}/product/get-product-by-id?id=${id}`).subscribe((res:any)=>{
+        //  this.productdata =  new MatTableDataSource < row > (res.data);
+  });
+
 }
 
-
-
  deleteProduct(id:string){
-   debugger
+ 
   this.http.delete(`${environment.apiProduct}/product/delete?id=${id}`)
   .subscribe((res:any)=>{
     if(res.isSuccess){
@@ -98,6 +112,8 @@ editProduct(row:any){
  
 
   }
+
+
 
 
   // export interface row {
