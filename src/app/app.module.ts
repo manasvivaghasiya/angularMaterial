@@ -17,6 +17,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { AddComponent } from './add/add.component';
 import {MatSelectModule} from '@angular/material/select';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 
@@ -46,7 +47,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     HttpClientModule,
     MatDialogModule,
-    
+    ScrollingModule
 
   ],
   providers: [],

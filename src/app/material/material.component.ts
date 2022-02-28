@@ -28,7 +28,7 @@ export class MaterialComponent implements OnInit {
   add: any;
   row:any;
   productForm: any;
-  dataSource!: MatTableDataSource<row>;
+  dataSource!: MatTableDataSource<any>;
 
 
   constructor(public dialog: MatDialog ,
@@ -45,25 +45,42 @@ export class MaterialComponent implements OnInit {
 
   getProduct(){
     this.http.get(`${environment.apiProduct}/product/get`).subscribe((res:any)=>{
-      this.dataSource =  new MatTableDataSource < row > (res.data);
+      this.dataSource =  new MatTableDataSource  (res.data);
       console.log(res);
       console.log(this.dataSource)
       this.ChangeDetector.detectChanges();
     });
   }
 
+  // getProduct(){
+  //   this.http.get(`${environment.apiProduct}/product/get`).subscribe({
+  //     next:(res)=>{
+  //       this.dataSource= new MatTableDataSource(res)
+  //     }
+  //   })
+  // }
+
 
 
   openDialog(){
     const dialogRef=this.dialog.open(AddComponent,{
-      width:'22%'
+      width:'30%'
 });
 
 }
 
-addProduct(){
-
+editProduct(row:any){
+  const dialogRef=this.dialog.open(AddComponent,{
+    width:'30%',
+    data:row
+}).afterClosed().subscribe(val=>{
+  if(val==='update'){
+    this.getProduct();
+  }
+})
 }
+
+
 
  deleteProduct(id:string){
    debugger
@@ -81,12 +98,15 @@ addProduct(){
  
 
   }
-export interface row {
-    category:string;
-    productName:string;
-    description:string;
-    price:number;
-    clothSize:string;
-    inStock:string;
-   }
+
+
+  // export interface row {
+  //   category:string;
+  //   productName:string;
+  //   description:string;
+  //   price:number;
+  //   clothSize:string;
+  //   inStock:string;
+  //  }
+
  

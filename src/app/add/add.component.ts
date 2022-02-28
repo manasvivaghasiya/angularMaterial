@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 // import { row } from '../material/material.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MaterialComponent } from '../material/material.component';
+import { error } from '@angular/compiler/src/util';
 
 
 
@@ -21,12 +22,13 @@ export class AddComponent implements OnInit {
   // categoryList=["Boys","girls"]
   formControl: any;
   productForm!:FormGroup;
-  // actionBtn : string ="save"
-  updateProduct: any;
+  actionBtn : string ="save"
+  // updateProduct: any;
 
   productdata:any;
-  id?:string;
+  // id?:string;
   data:any;
+  editData: any;
 
   constructor(private formBuilder:FormBuilder, 
     private http:HttpClient,
@@ -42,6 +44,17 @@ export class AddComponent implements OnInit {
       inStock:['',Validators.required],
       
     });
+    if(this.editData){
+      this.actionBtn="update"          
+      this.productForm.controls['category'].setValue(this.editData.category);
+      this.productForm.controls['productName'].setValue(this.editData.productName);
+      this.productForm.controls['description'].setValue(this.editData.description);
+      this.productForm.controls['price'].setValue(this.editData.price);
+      this.productForm.controls['clothSize'].setValue(this.editData.clothSize);
+      this.productForm.controls['inStock'].setValue(this.editData.inStock);
+
+
+    }
    
   }
   submit(){
@@ -57,22 +70,42 @@ export class AddComponent implements OnInit {
          
       //  });
       //  this.dialogRef.close
-      if(this.id){
-        this.http.post(`${environment.apiProduct}/product/update?id=${this.id}`,this.productForm.value)
-        .subscribe((res:any)=>{
+      if(!this.editData){
+        if(this.productForm.valid){
+        
+          this.http.post(`${environment.apiProduct}/product/add`,this.productForm.value)
+           .subscribe({
+            next:(res)=>{
+              alert("product added successfully")
+              this.productForm.reset();
+              this.dialogRef.close('save');
+            },
+            error:()=>{
+              alert("error while adding the product")
+            }
+  
         });
-   
-      }else{
-        this.http.post(`${environment.apiProduct}/product/add`,this.productForm.value)
-         .subscribe((res:Data)=>{
-          // this.getProduct()<MaterialComponent>
-           
-         });
-         
-         this.dialogRef.close();
-
+   }else{
+     this.updateProduct();
+   }
       }
- }
+     
+}
+
+updateProduct(id?:string){
+  this.http.post(`${environment.apiProduct}/product/update?id=${id}`,this.productForm.value,this.editData.id)
+  .subscribe({
+    next:(res)=>{
+      alert("product updated successfully");
+      this.productForm.reset();
+      this.dialogRef.close('update');
+
+    },
+    error:()=>{
+      alert("error while updating the record")
+    }
+  })
+}
 
  
  getByProductId(id:string){
